@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jr Dugout — Arepas & Burgers a la Leña · Paracuellos de Jarama</title>
+  <meta name="description" content="Arepas artesanales y hamburguesas cocinadas a fuego de leña. Sabor venezolano auténtico en Paracuellos de Jarama, Madrid. ☎ 607 92 02 85">
+
+  <!-- Google Fonts: Epilogue + Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'surface':        '#131313',
+            'surface-low':    '#1B1C1C',
+            'surface-high':   '#2A2A2A',
+            'primary':        '#E65100',
+            'primary-light':  '#FFB59A',
+            'secondary':      '#FFC107',
+            'on-surface':     '#E5E2E1',
+            'muted':          '#9E9E9E',
+          },
+          fontFamily: {
+            'display': ['Epilogue', 'sans-serif'],
+            'body':    ['Plus Jakarta Sans', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    * { font-family: 'Plus Jakarta Sans', sans-serif; box-sizing: border-box; }
+    .font-display { font-family: 'Epilogue', sans-serif; }
+
+    /* ---- Glassmorphism nav ---- */
+    .glass-nav {
+      background: rgba(19, 19, 19, 0.82);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      /* cubre el tope absoluto para que no haya hueco */
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+
+    /* ---- Flame gradient ---- */
+    .flame-bg   { background: linear-gradient(135deg, #FFB59A 0%, #F95E14 100%); }
+    .flame-text {
+      background: linear-gradient(135deg, #FFB59A 0%, #F95E14 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ---- Buttons ---- */
+    .btn-primary {
+      background: linear-gradient(135deg, #FFB59A 0%, #F95E14 100%);
+      color: #fff;
+      font-weight: 700;
+      border-radius: 9999px;
+      transition: transform 200ms ease, box-shadow 200ms ease;
+      cursor: pointer;
+      display: inline-block;
+    }
+    .btn-primary:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 36px rgba(230,81,0,0.45);
+    }
+    .btn-outline {
+      border: 2px solid rgba(229,226,225,0.28);
+      color: #E5E2E1;
+      font-weight: 600;
+      border-radius: 9999px;
+      transition: border-color 200ms ease, color 200ms ease;
+      cursor: pointer;
+      display: inline-block;
+    }
+    .btn-outline:hover { border-color: #FFC107; color: #FFC107; }
+
+    /* ---- Card hover ---- */
+    .menu-card {
+      transition: transform 250ms ease, box-shadow 250ms ease;
+      cursor: pointer;
+    }
+    .menu-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 32px 64px rgba(0,0,0,0.35);
+    }
+
+    /* ---- Popular chip ---- */
+    .chip-popular {
+      background: #FABD00;
+      color: #212121;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      padding: 3px 10px;
+      border-radius: 9999px;
+    }
+
+    /* ---- Scroll reveal ---- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 550ms ease, transform 550ms ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ---- Placeholder image ---- */
+    .img-placeholder {
+      background: linear-gradient(135deg, #2A1A0E 0%, #1B1C1C 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ---- Divider subtle ---- */
+    .divider { background: #2A2A2A; height: 1px; }
+
+    /* ---- Delivery modal ---- */
+    .modal-backdrop {
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    .delivery-card {
+      transition: transform 200ms ease, box-shadow 200ms ease;
+      cursor: pointer;
+    }
+    .delivery-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    /* Evita que el navbar tape el contenido al navegar por anclas */
+    section[id], div[id] { scroll-margin-top: 72px; }
+
+    /* ---- Scroll progress bar ---- */
+    #scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px;
+      width: 0%;
+      z-index: 200;
+      background: linear-gradient(90deg, #FFB59A, #F95E14);
+      transition: width 80ms linear;
+      pointer-events: none;
+    }
+
+
+    /* Reduce motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, .reveal, .btn-primary, .btn-outline, .menu-card {
+        transition: none !important;
+        animation: none !important;
+      }
+      .gsap-hidden { opacity: 1 !important; }
+    }
+  </style>
+</head>
+<body class="bg-[#131313] text-[#E5E2E1]">
+
+<!-- Scroll progress bar -->
+<div id="scroll-progress" aria-hidden="true"></div>
+
+<!-- =========================================================
+     DELIVERY MODAL
+========================================================= -->
+<div id="delivery-modal" class="modal-backdrop hidden fixed inset-0 z-[100] flex items-center justify-center px-4" role="dialog" aria-modal="true" aria-label="Elige dónde pedir">
+  <div class="bg-[#1B1C1C] rounded-3xl p-8 w-full max-w-md shadow-2xl">
+
+    <div class="flex items-center justify-between mb-2">
+      <p class="text-[#FFC107] font-display font-bold text-xs uppercase tracking-[0.3em]">Pedir online</p>
+      <button onclick="closeDeliveryModal()" class="text-[#9E9E9E] hover:text-[#E5E2E1] transition-colors duration-200 cursor-pointer p-1" aria-label="Cerrar">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <h2 class="font-display font-black text-2xl text-white mb-6">¿Dónde quieres pedir?</h2>
+
+    <div class="flex flex-col gap-3">
+
+      <!-- Uber Eats -->
+      <a href="https://www.ubereats.com/es/store/jr-dugout-cafe/LwrB53dJT0iAlDnw4cZ_qw" target="_blank" rel="noopener noreferrer"
+         class="delivery-card bg-[#2A2A2A] rounded-2xl p-4 flex items-center gap-4 no-underline">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style="background:#000;">
+          <!-- Uber Eats logo -->
+          <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Uber Eats">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="#06C167"/>
+            <circle cx="12" cy="12" r="4" fill="#06C167"/>
+          </svg>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="font-display font-bold text-white text-base">Uber Eats</p>
+          <p class="font-body text-[#9E9E9E] text-xs">Entrega rápida a domicilio</p>
+        </div>
+        <svg class="w-4 h-4 text-[#9E9E9E] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+
+      <!-- Glovo -->
+      <a href="https://glovoapp.com/es/es/paracuellos-del-jarama/stores/jr-dugout-cafe-paracuellos-del-jarama" target="_blank" rel="noopener noreferrer"
+         class="delivery-card bg-[#2A2A2A] rounded-2xl p-4 flex items-center gap-4 no-underline">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style="background:#FFC244;">
+          <!-- Glovo logo mark -->
+          <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Glovo">
+            <circle cx="12" cy="9" r="5" fill="#1A1A1A"/>
+            <path d="M12 14c-4 0-7 2-7 4.5V20h14v-1.5c0-2.5-3-4.5-7-4.5z" fill="#1A1A1A"/>
+          </svg>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="font-display font-bold text-white text-base">Glovo</p>
+          <p class="font-body text-[#9E9E9E] text-xs">Pide y recibe en minutos</p>
+        </div>
+        <svg class="w-4 h-4 text-[#9E9E9E] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+
+      <!-- Just Eat -->
+      <a href="https://www.just-eat.es/restaurants-jr-dugout-paracuellos-de-jarama/menu" target="_blank" rel="noopener noreferrer"
+         class="delivery-card bg-[#2A2A2A] rounded-2xl p-4 flex items-center gap-4 no-underline">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style="background:#FF8000;">
+          <!-- Just Eat logo mark -->
+          <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Just Eat">
+            <rect x="4" y="6" width="16" height="3" rx="1.5" fill="white"/>
+            <rect x="4" y="10.5" width="11" height="3" rx="1.5" fill="white"/>
+            <rect x="4" y="15" width="14" height="3" rx="1.5" fill="white"/>
+          </svg>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="font-display font-bold text-white text-base">Just Eat</p>
+          <p class="font-body text-[#9E9E9E] text-xs">Tu comida favorita en casa</p>
+        </div>
+        <svg class="w-4 h-4 text-[#9E9E9E] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- =========================================================
+     NAVBAR
+========================================================= -->
+<nav class="glass-nav fixed top-0 left-0 right-0 z-50 px-6 py-3 flex items-center justify-between" role="navigation" aria-label="Navegación principal">
+
+  <a href="#hero" class="flex items-center gap-2" aria-label="Jr Dugout — inicio">
+    <img src="img/logojrdugout.png" alt="Jr Dugout" class="h-9 w-auto">
+  </a>
+
+  <!-- Desktop links -->
+  <div class="hidden md:flex items-center gap-7">
+    <a href="#nosotros" class="text-[#E5E2E1] hover:text-[#FFC107] transition-colors duration-200 text-sm font-semibold uppercase tracking-widest">Nosotros</a>
+    <a href="#arepas"   class="text-[#E5E2E1] hover:text-[#FFC107] transition-colors duration-200 text-sm font-semibold uppercase tracking-widest">Arepas</a>
+    <a href="#burgers"  class="text-[#E5E2E1] hover:text-[#FFC107] transition-colors duration-200 text-sm font-semibold uppercase tracking-widest">Burgers</a>
+    <a href="#patatas"  class="text-[#E5E2E1] hover:text-[#FFC107] transition-colors duration-200 text-sm font-semibold uppercase tracking-widest">Patatas</a>
+    <a href="#contacto" class="text-[#E5E2E1] hover:text-[#FFC107] transition-colors duration-200 text-sm font-semibold uppercase tracking-widest">Contacto</a>
+  </div>
+
+  <div class="flex items-center gap-3">
+    <button onclick="openDeliveryModal()" class="btn-primary px-5 py-2.5 text-sm">Pedir Online</button>
+    <!-- Hamburger -->
+    <button id="menu-toggle" class="md:hidden text-[#E5E2E1] p-1 cursor-pointer" aria-label="Abrir menú" aria-expanded="false">
+      <svg id="icon-open"  class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      <svg id="icon-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile dropdown -->
+<div id="mobile-menu" class="hidden fixed top-16 left-0 right-0 z-40 bg-[#1B1C1C] p-6 flex-col gap-5 shadow-2xl border-t border-white/5" role="dialog" aria-label="Menú móvil">
+  <a href="#nosotros" onclick="closeMobileMenu()" class="font-semibold text-[#E5E2E1] hover:text-[#FFC107] transition-colors duration-200 cursor-pointer">Nosotros</a>
+  <a href="#arepas"   onclick="closeMobileMenu()" class="font-semibold text-[#E5E2E1] hover:text-[#FFC107] transition-colors duration-200 cursor-pointer">Arepas</a>
+  <a href="#burgers"  onclick="closeMobileMenu()" class="font-semibold text-[#E5E2E1] hover:text-[#FFC107] transition-colors duration-200 cursor-pointer">Burgers a la Leña</a>
+  <a href="#patatas"  onclick="closeMobileMenu()" class="font-semibold text-[#E5E2E1] hover:text-[#FFC107] transition-colors duration-200 cursor-pointer">Patatas Fritas</a>
+  <a href="#bebidas"  onclick="closeMobileMenu()" class="font-semibold text-[#E5E2E1] hover:text-[#FFC107] transition-colors duration-200 cursor-pointer">Bebidas</a>
+  <a href="#raciones" onclick="closeMobileMenu()" class="font-semibold text-[#E5E2E1] hover:text-[#FFC107] transition-colors duration-200 cursor-pointer">Raciones y Otros</a>
+  <a href="#contacto" onclick="closeMobileMenu()" class="font-semibold text-[#E5E2E1] hover:text-[#FFC107] transition-colors duration-200 cursor-pointer">Contacto</a>
+</div>
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+<section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+
+  <!-- Background -->
+  <div class="absolute inset-0">
+    <img src="img/burguerjr.png" alt="" class="w-full h-full object-cover" aria-hidden="true">
+    <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(19,19,19,0.55) 0%, rgba(19,19,19,0.7) 60%, #131313 100%);"></div>
+    <!-- Glow orb -->
+    <div id="hero-glow" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none" style="background: radial-gradient(circle, rgba(230,81,0,0.22) 0%, transparent 70%);"></div>
+  </div>
+
+  <!-- Dark gradient overlay -->
+  <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(19,19,19,0.2) 0%, rgba(19,19,19,0.55) 60%, #131313 100%);"></div>
+
+  <!-- Content -->
+  <div class="relative z-10 text-center px-6 max-w-5xl mx-auto">
+
+    <!-- Logo -->
+    <div class="flex justify-center mb-8">
+      <img src="img/logojrdugout.png" alt="Jr Dugout" class="h-24 md:h-36 w-auto drop-shadow-2xl">
+    </div>
+
+    <p class="text-[#FFC107] font-display font-bold text-xs uppercase tracking-[0.35em] mb-5">Paracuellos de Jarama · Madrid</p>
+
+    <h1 class="font-display font-black text-5xl md:text-7xl lg:text-8xl text-white leading-[1.05] mb-6">
+      Sabor<br>
+      <span class="flame-text">Venezolano</span><br>
+      a la Brasa
+    </h1>
+
+    <p class="font-body text-[#E5E2E1] text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed" style="opacity:0.88;">
+      Arepas artesanales y burgers cocinadas a fuego de leña real.<br class="hidden md:block"> El calor de Venezuela en cada bocado.
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <button onclick="openDeliveryModal()" class="btn-primary px-10 py-4 text-base">Pedir Online Ahora</button>
+      <a href="#menu" class="btn-outline px-10 py-4 text-base">Ver el Menú</a>
+    </div>
+
+    <!-- 5 stars -->
+    <div class="flex items-center justify-center gap-2 mt-14">
+      <div class="flex gap-0.5" aria-label="5 estrellas de valoración">
+        <svg class="w-5 h-5 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        <svg class="w-5 h-5 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        <svg class="w-5 h-5 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        <svg class="w-5 h-5 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        <svg class="w-5 h-5 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+      </div>
+      <span class="font-body text-sm text-[#E5E2E1]" style="opacity:0.72;">5,0 · 86 reseñas en Google</span>
+    </div>
+  </div>
+
+  <!-- Scroll arrow -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce" aria-hidden="true">
+    <svg class="w-6 h-6 text-[#E5E2E1]" style="opacity:0.4;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+    </svg>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     ABOUT
+========================================================= -->
+<section id="nosotros" class="bg-[#1B1C1C] py-24">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-16 items-center">
+
+      <!-- Text -->
+      <div class="reveal">
+        <p class="text-[#FFC107] font-display font-bold text-xs uppercase tracking-[0.35em] mb-4">Nuestra Historia</p>
+        <h2 class="font-display font-black text-4xl md:text-5xl text-white leading-tight mb-6">
+          El sabor que<br>
+          <span class="flame-text">nunca olvidarás</span>
+        </h2>
+        <p class="font-body text-[#9E9E9E] text-base leading-relaxed mb-5">
+          En Jr Dugout traemos a Madrid lo mejor de la cocina venezolana: arepas rellenas con amor y burgers cocinadas a fuego de leña real. Cada plato es un viaje a Caracas, a las brasas del barrio, al sabor de casa.
+        </p>
+        <p class="font-body text-[#9E9E9E] text-base leading-relaxed mb-10">
+          Usamos ingredientes frescos y técnicas tradicionales. No somos fast food. Somos comida de verdad, hecha con fuego y con alma.
+        </p>
+
+        <!-- Stats -->
+        <div id="stats-block" class="flex gap-8 flex-wrap">
+          <div>
+            <p class="font-display text-4xl font-black text-[#E65100]"><span id="stat-reviews">0</span></p>
+            <p class="font-body text-[#9E9E9E] text-sm mt-1">Reseñas 5 estrellas</p>
+          </div>
+          <div class="w-px bg-[#2A2A2A]"></div>
+          <div>
+            <p class="font-display text-4xl font-black text-[#E65100]">100%</p>
+            <p class="font-body text-[#9E9E9E] text-sm mt-1">Sabor venezolano</p>
+          </div>
+          <div class="w-px bg-[#2A2A2A]"></div>
+          <div>
+            <p class="font-display text-lg font-black text-[#E65100] leading-tight">A la<br>Leña</p>
+            <p class="font-body text-[#9E9E9E] text-sm mt-1">Fuego real</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Image -->
+      <div class="reveal">
+        <div class="rounded-3xl overflow-hidden aspect-square">
+          <img src="img/arepajrdugout2.png" alt="Arepa Jr Dugout" class="w-full h-full object-cover">
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     MENU HEADER
+========================================================= -->
+<div id="menu" class="bg-[#131313] py-20 text-center">
+  <div class="max-w-3xl mx-auto px-6">
+    <p class="text-[#FFC107] font-display font-bold text-xs uppercase tracking-[0.35em] mb-4">Lo que cocinamos</p>
+    <h2 class="font-display font-black text-5xl md:text-6xl text-white">Nuestro Menú</h2>
+  </div>
+</div>
+
+
+<!-- =========================================================
+     AREPAS
+========================================================= -->
+<section id="arepas" class="bg-[#1B1C1C] py-20">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-12 gap-4 reveal">
+      <div>
+        <p class="text-[#FFC107] font-display font-bold text-xs uppercase tracking-[0.35em] mb-2">Tradicionales</p>
+        <h3 class="font-display font-black text-4xl md:text-5xl text-white">Las Arepas</h3>
+      </div>
+      <p class="font-body text-[#9E9E9E] text-sm md:max-w-xs md:text-right leading-relaxed">Hechas a mano con harina de maíz. Rellenas con lo mejor de Venezuela.</p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- Card macro -->
+      <!-- Arepa Jr Dugout (Popular) -->
+      <div class="menu-card bg-[#2A2A2A] rounded-3xl overflow-hidden">
+        <div class="h-52 relative overflow-hidden">
+          <img src="img/arepajrdugout2.png" alt="Arepa Jr Dugout Café" class="w-full h-full object-cover">
+          <div class="absolute top-3 left-3"><span class="chip-popular">Popular</span></div>
+        </div>
+        <div class="p-6">
+          <h4 class="font-display text-xl font-bold text-white mb-1">Arepa Jr Dugout Café</h4>
+          <p class="font-body text-[#9E9E9E] text-sm leading-relaxed mb-5">Nuestra arepa estrella. La combinación perfecta del sabor de casa.</p>
+          <div class="flex items-center justify-between">
+            <span class="font-display text-2xl font-black text-[#E65100]">8,99 €</span>
+            <button onclick="openDeliveryModal()" class="btn-primary px-5 py-2 text-sm">Pedir</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Arepa Carne Mechada -->
+      <div class="menu-card bg-[#2A2A2A] rounded-3xl overflow-hidden">
+        <div class="h-52 relative overflow-hidden">
+          <img src="img/arepajrdugout2.png" alt="Arepa de Carne Mechada" class="w-full h-full object-cover">
+        </div>
+        <div class="p-6">
+          <h4 class="font-display text-xl font-bold text-white mb-1">Arepa de Carne Mechada</h4>
+          <p class="font-body text-[#9E9E9E] text-sm leading-relaxed mb-5">Ternera desmechada, jugosa y sazonada al estilo venezolano.</p>
+          <div class="flex items-center justify-between">
+            <span class="font-display text-2xl font-black text-[#E65100]">7,99 €</span>
+            <button onclick="openDeliveryModal()" class="btn-primary px-5 py-2 text-sm">Pedir</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Arepa Pollo -->
+      <div class="menu-card bg-[#2A2A2A] rounded-3xl overflow-hidden">
+        <div class="h-52 relative overflow-hidden">
+          <img src="img/arepapollo.png" alt="Arepa de Pollo" class="w-full h-full object-cover">
+        </div>
+        <div class="p-6">
+          <h4 class="font-display text-xl font-bold text-white mb-1">Arepa de Pollo</h4>
+          <p class="font-body text-[#9E9E9E] text-sm leading-relaxed mb-5">Pollo tierno y sabroso, condimentado con especias venezolanas.</p>
+          <div class="flex items-center justify-between">
+            <span class="font-display text-2xl font-black text-[#E65100]">7,50 €</span>
+            <button onclick="openDeliveryModal()" class="btn-primary px-5 py-2 text-sm">Pedir</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Arepa Peluda -->
+      <div class="menu-card bg-[#2A2A2A] rounded-3xl overflow-hidden">
+        <div class="h-52 relative overflow-hidden">
+          <img src="img/arepajrdugout2.png" alt="Arepa Peluda" class="w-full h-full object-cover">
+        </div>
+        <div class="p-6">
+          <h4 class="font-display text-xl font-bold text-white mb-1">Arepa Peluda</h4>
+          <p class="font-body text-[#9E9E9E] text-sm leading-relaxed mb-5">Carne mechada y queso fundido. El clásico venezolano por excelencia.</p>
+          <div class="flex items-center justify-between">
+            <span class="font-display text-2xl font-black text-[#E65100]">8,50 €</span>
+            <button onclick="openDeliveryModal()" class="btn-primary px-5 py-2 text-sm">Pedir</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Arepa Jamón y Queso -->
+      <div class="menu-card bg-[#2A2A2A] rounded-3xl overflow-hidden">
+        <div class="h-52 relative overflow-hidden">
+          <img src="img/arepajrdugout2.png" alt="Arepa Jamón y Queso" class="w-full h-full object-cover">
+        </div>
+        <div class="p-6">
+          <h4 class="font-display text-xl font-bold text-white mb-1">Arepa Jamón y Queso</h4>
+          <p class="font-body text-[#9E9E9E] text-sm leading-relaxed mb-5">La combinación clásica de jamón y queso en una arepa dorada.</p>
+          <div class="flex items-center justify-between">
+            <span class="font-display text-2xl font-black text-[#E65100]">6,40 €</span>
+            <button onclick="openDeliveryModal()" class="btn-primary px-5 py-2 text-sm">Pedir</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     BURGERS
+========================================================= -->
+<section id="burgers" class="bg-[#131313] py-20">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-12 gap-4 reveal">
+      <div>
+        <p class="text-[#FFC107] font-display font-bold text-xs uppercase tracking-[0.35em] mb-2">Fuego Real</p>
+        <h3 class="font-display font-black text-4xl md:text-5xl text-white">Burgers a la Leña</h3>
+      </div>
+      <p class="font-body text-[#9E9E9E] text-sm md:max-w-xs md:text-right leading-relaxed">Cocinadas sobre fuego de leña auténtico. Ese sabor que no se consigue en ningún otro lado.</p>
+    </div>
+
+    <!-- Featured hero card -->
+    <div class="menu-card bg-[#1B1C1C] rounded-3xl overflow-hidden mb-6">
+      <div class="grid md:grid-cols-2">
+        <div class="relative overflow-hidden" style="min-height:280px;">
+          <img src="img/burguerjr.png" alt="Burguer Ternera" class="w-full h-full object-cover absolute inset-0">
+          <div class="absolute top-4 left-4"><span class="chip-popular">Popular</span></div>
+        </div>
+        <div class="p-8 md:p-12 flex flex-col justify-center">
+          <p class="text-[#E65100] font-display font-bold text-xs uppercase tracking-[0.35em] mb-3">Bestseller</p>
+          <h4 class="font-display font-black text-3xl md:text-4xl text-white mb-3">Burguer Ternera</h4>
+          <p class="font-body text-[#9E9E9E] text-base leading-relaxed mb-8">Carne de ternera 100% natural, cocinada a la leña. El brillo de la brasa, la textura perfecta, el sabor que vuelve.</p>
+          <div class="flex items-center gap-6 flex-wrap">
+            <span class="font-display text-4xl font-black text-[#E65100]">13,99 €</span>
+            <button onclick="openDeliveryModal()" class="btn-primary px-8 py-3 text-base">Pedir Ahora</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Burger grid -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <div class="menu-card bg-[#1B1C1C] rounded-3xl overflow-hidden">
+        <div class="h-44 relative overflow-hidden">
+          <img src="img/burguerjr.png" alt="Burguer Pollo" class="w-full h-full object-cover">
+        </div>
+        <div class="p-6">
+          <h4 class="font-display text-xl font-bold text-white mb-1">Burguer Pollo</h4>
+          <p class="font-body text-[#9E9E9E] text-sm mb-5">Pollo jugoso a la leña con aliños especiales de la casa.</p>
+          <div class="flex items-center justify-between">
+            <span class="font-display text-2xl font-black text-[#E65100]">11,99 €</span>
+            <button onclick="openDeliveryModal()" class="btn-primary px-5 py-2 text-sm">Pedir</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-card bg-[#1B1C1C] rounded-3xl overflow-hidden">
+        <div class="h-44 overflow-hidden">
+          <img src="img/burguerjr.png" alt="Burguer Sajonia" class="w-full h-full object-cover">
+        </div>
+        <div class="p-6">
+          <h4 class="font-display text-xl font-bold text-white mb-1">Burguer Sajonia</h4>
+          <p class="font-body text-[#9E9E9E] text-sm mb-5">Combinación especial de sabores ahumados y tiernos a la brasa.</p>
+          <div class="flex items-center justify-between">
+            <span class="font-display text-2xl font-black text-[#E65100]">12,99 €</span>
+            <button onclick="openDeliveryModal()" class="btn-primary px-5 py-2 text-sm">Pedir</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-card bg-[#1B1C1C] rounded-3xl overflow-hidden">
+        <div class="h-44 overflow-hidden">
+          <img src="img/burguerjr.png" alt="Burguer Carne Mechada" class="w-full h-full object-cover">
+        </div>
+        <div class="p-6">
+          <h4 class="font-display text-xl font-bold text-white mb-1">Burguer Carne Mechada</h4>
+          <p class="font-body text-[#9E9E9E] text-sm mb-5">Carne mechada venezolana en formato hamburguesa. Único en Madrid.</p>
+          <div class="flex items-center justify-between">
+            <span class="font-display text-2xl font-black text-[#E65100]">13,99 €</span>
+            <button onclick="openDeliveryModal()" class="btn-primary px-5 py-2 text-sm">Pedir</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-card bg-[#1B1C1C] rounded-3xl overflow-hidden">
+        <div class="h-44 overflow-hidden">
+          <img src="img/burguerjr.png" alt="Burguer Doble" class="w-full h-full object-cover">
+        </div>
+        <div class="p-6">
+          <h4 class="font-display text-xl font-bold text-white mb-1">Burguer Doble</h4>
+          <p class="font-body text-[#9E9E9E] text-sm mb-5">El doble de carne, el doble de sabor. Para los más valientes.</p>
+          <div class="flex items-center justify-between">
+            <span class="font-display text-2xl font-black text-[#E65100]">15,99 €</span>
+            <button onclick="openDeliveryModal()" class="btn-primary px-5 py-2 text-sm">Pedir</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-card bg-[#1B1C1C] rounded-3xl overflow-hidden">
+        <div class="h-44 overflow-hidden">
+          <img src="img/burguerjr.png" alt="Burguer Triple" class="w-full h-full object-cover">
+        </div>
+        <div class="p-6">
+          <h4 class="font-display text-xl font-bold text-white mb-1">Burguer Triple</h4>
+          <p class="font-body text-[#9E9E9E] text-sm mb-5">Tres capas de carne a la leña. El reto definitivo.</p>
+          <div class="flex items-center justify-between">
+            <span class="font-display text-2xl font-black text-[#E65100]">18,99 €</span>
+            <button onclick="openDeliveryModal()" class="btn-primary px-5 py-2 text-sm">Pedir</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-card bg-[#1B1C1C] rounded-3xl overflow-hidden">
+        <div class="h-44 relative overflow-hidden">
+          <img src="img/burguerjr.png" alt="Cuadrangular" class="w-full h-full object-cover">
+        </div>
+        <div class="p-6">
+          <h4 class="font-display text-xl font-bold text-white mb-1">Cuadrangular</h4>
+          <p class="font-body text-[#9E9E9E] text-sm mb-5">La burger XXL de la casa. El showstopper del menú.</p>
+          <div class="flex items-center justify-between">
+            <span class="font-display text-2xl font-black text-[#E65100]">22,99 €</span>
+            <button onclick="openDeliveryModal()" class="btn-primary px-5 py-2 text-sm">Pedir</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     PATATAS
+========================================================= -->
+<section id="patatas" class="bg-[#1B1C1C] py-20">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <div class="mb-12 reveal">
+      <p class="text-[#FFC107] font-display font-bold text-xs uppercase tracking-[0.35em] mb-2">Para acompañar</p>
+      <h3 class="font-display font-black text-4xl md:text-5xl text-white">Patatas Fritas</h3>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+
+      <div class="menu-card bg-[#2A2A2A] rounded-3xl p-6">
+        <div class="flame-bg w-11 h-11 rounded-2xl flex items-center justify-center mb-5" aria-hidden="true">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"/></svg>
+        </div>
+        <h4 class="font-display text-lg font-bold text-white mb-2">Patata Carne Mechada y Queso</h4>
+        <p class="font-body text-[#9E9E9E] text-sm leading-relaxed mb-5">Las patatas más completas y sabrosas del menú.</p>
+        <span class="font-display text-2xl font-black text-[#E65100]">9,99 €</span>
+      </div>
+
+      <div class="menu-card bg-[#2A2A2A] rounded-3xl p-6 relative">
+        <div class="absolute top-4 right-4"><span class="chip-popular">Popular</span></div>
+        <div class="flame-bg w-11 h-11 rounded-2xl flex items-center justify-center mb-5" aria-hidden="true">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"/></svg>
+        </div>
+        <h4 class="font-display text-lg font-bold text-white mb-2">Patatas con Pollo</h4>
+        <p class="font-body text-[#9E9E9E] text-sm leading-relaxed mb-5">Pollo tierno sobre una cama de patatas crujientes.</p>
+        <span class="font-display text-2xl font-black text-[#E65100]">8,99 €</span>
+      </div>
+
+      <div class="menu-card bg-[#2A2A2A] rounded-3xl p-6">
+        <div class="flame-bg w-11 h-11 rounded-2xl flex items-center justify-center mb-5" aria-hidden="true">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"/></svg>
+        </div>
+        <h4 class="font-display text-lg font-bold text-white mb-2">Patatas Sencillas</h4>
+        <p class="font-body text-[#9E9E9E] text-sm leading-relaxed mb-5">Patatas fritas crujientes. Sencillas, pero perfectas.</p>
+        <span class="font-display text-2xl font-black text-[#E65100]">3,99 €</span>
+      </div>
+
+      <div class="menu-card bg-[#2A2A2A] rounded-3xl p-6">
+        <div class="flame-bg w-11 h-11 rounded-2xl flex items-center justify-center mb-5" aria-hidden="true">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"/></svg>
+        </div>
+        <h4 class="font-display text-lg font-bold text-white mb-2">Patatas con Carne Mechada</h4>
+        <p class="font-body text-[#9E9E9E] text-sm leading-relaxed mb-5">Carne mechada venezolana sobre patatas. Plato completo.</p>
+        <span class="font-display text-2xl font-black text-[#E65100]">8,99 €</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     BEBIDAS + RACIONES
+========================================================= -->
+<section id="bebidas" class="bg-[#131313] py-20">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-14">
+
+      <!-- BEBIDAS -->
+      <div>
+        <div class="mb-8 reveal">
+          <p class="text-[#FFC107] font-display font-bold text-xs uppercase tracking-[0.35em] mb-2">Para refrescarte</p>
+          <h3 class="font-display font-black text-3xl md:text-4xl text-white">Bebidas</h3>
+        </div>
+
+        <ul class="space-y-0" role="list">
+          <li class="flex items-center justify-between py-4 group cursor-default">
+            <span class="font-body text-[#E5E2E1] font-medium group-hover:text-[#FFC107] transition-colors duration-200">Coca-cola (lata 33 cl)</span>
+            <span class="font-display font-bold text-[#E65100]">2,20 €</span>
+          </li>
+          <div class="divider"></div>
+          <li class="flex items-center justify-between py-4 group cursor-default">
+            <span class="font-body text-[#E5E2E1] font-medium group-hover:text-[#FFC107] transition-colors duration-200">Aquarius Naranja (33 cl)</span>
+            <span class="font-display font-bold text-[#E65100]">2,20 €</span>
+          </li>
+          <div class="divider"></div>
+          <li class="flex items-center justify-between py-4 group cursor-default">
+            <span class="font-body text-[#E5E2E1] font-medium group-hover:text-[#FFC107] transition-colors duration-200">Aquarius Limón</span>
+            <span class="font-display font-bold text-[#E65100]">2,20 €</span>
+          </li>
+          <div class="divider"></div>
+          <li class="flex items-center justify-between py-4 group cursor-default">
+            <span class="font-body text-[#E5E2E1] font-medium group-hover:text-[#FFC107] transition-colors duration-200">Nestea (33 cl)</span>
+            <span class="font-display font-bold text-[#E65100]">2,20 €</span>
+          </li>
+          <div class="divider"></div>
+          <li class="flex items-center justify-between py-4 group cursor-default">
+            <span class="font-body text-[#E5E2E1] font-medium group-hover:text-[#FFC107] transition-colors duration-200">Fanta Naranja (33 cl)</span>
+            <span class="font-display font-bold text-[#E65100]">2,20 €</span>
+          </li>
+          <div class="divider"></div>
+          <li class="flex items-center justify-between py-4 group cursor-default">
+            <span class="font-body text-[#E5E2E1] font-medium group-hover:text-[#FFC107] transition-colors duration-200">Estrella de Galicia (lata 33 cl)</span>
+            <span class="font-display font-bold text-[#E65100]">2,50 €</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- RACIONES Y OTROS -->
+      <div id="raciones">
+        <div class="mb-8 reveal">
+          <p class="text-[#FFC107] font-display font-bold text-xs uppercase tracking-[0.35em] mb-2">Para compartir</p>
+          <h3 class="font-display font-black text-3xl md:text-4xl text-white">Raciones y Otros</h3>
+        </div>
+
+        <!-- Tequeños -->
+        <div class="menu-card bg-[#1B1C1C] rounded-3xl p-6 mb-4">
+          <div class="flex gap-5 items-start">
+            <div class="w-20 h-20 rounded-2xl flex-shrink-0 overflow-hidden">
+              <img src="img/tequeñosjr.png" alt="Tequeños" class="w-full h-full object-cover">
+            </div>
+            <div class="flex-1 min-w-0">
+              <h4 class="font-display text-xl font-bold text-white mb-1">Tequeños <span class="font-body text-sm text-[#9E9E9E] font-normal">(6 uds.)</span></h4>
+              <p class="font-body text-[#9E9E9E] text-sm mb-4 leading-relaxed">Crujientes por fuera, queso derretido por dentro. El aperitivo venezolano definitivo.</p>
+              <div class="flex items-center justify-between">
+                <span class="font-display text-xl font-black text-[#E65100]">7,00 €</span>
+                <button onclick="openDeliveryModal()" class="btn-primary px-5 py-2 text-sm">Pedir</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Desayuno -->
+        <div class="menu-card bg-[#1B1C1C] rounded-3xl p-6">
+          <div class="flex gap-5 items-start">
+            <div class="img-placeholder w-20 h-20 rounded-2xl flex-shrink-0 flex items-center justify-center opacity-60">
+              <!-- REPLACE: <img src="img/desayuno.jpg" alt="Desayuno con Tostada" class="w-full h-full object-cover rounded-2xl"> -->
+              <svg class="w-8 h-8 opacity-50" fill="currentColor" style="color:#E65100" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/></svg>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h4 class="font-display text-xl font-bold text-white mb-1">Desayuno con Tostada</h4>
+              <p class="font-body text-[#9E9E9E] text-sm mb-4 leading-relaxed">El desayuno perfecto para empezar el día con energía venezolana.</p>
+              <div class="flex items-center justify-between">
+                <span class="font-display text-xl font-black text-[#E65100]">2,99 €</span>
+                <button onclick="openDeliveryModal()" class="btn-primary px-5 py-2 text-sm">Pedir</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     CTA BANNER
+========================================================= -->
+<section class="py-24" style="background: linear-gradient(135deg, #1a0800 0%, #131313 100%);">
+  <div class="max-w-4xl mx-auto px-6 text-center">
+    <p class="text-[#FFC107] font-display font-bold text-xs uppercase tracking-[0.35em] mb-5">¿Tienes hambre?</p>
+    <h2 class="font-display font-black text-4xl md:text-6xl text-white leading-tight mb-6">
+      Llámanos y<br>
+      <span class="flame-text">pedimos ahora</span>
+    </h2>
+    <p class="font-body text-[#9E9E9E] text-lg mb-10 max-w-xl mx-auto leading-relaxed">
+      Pide desde tu app favorita y recíbelo en casa, o ven a visitarnos en Paracuellos de Jarama.
+    </p>
+
+    <!-- Delivery buttons -->
+    <div class="flex flex-col sm:flex-row gap-4 justify-center mb-6 flex-wrap">
+
+      <a href="https://www.ubereats.com/es/store/jr-dugout-cafe/LwrB53dJT0iAlDnw4cZ_qw"
+         target="_blank" rel="noopener noreferrer"
+         class="delivery-card flex items-center gap-3 bg-[#1B1C1C] rounded-full px-7 py-4 no-underline group">
+        <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:#06C167;">
+          <svg class="w-4 h-4 text-black" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="5"/></svg>
+        </div>
+        <span class="font-display font-bold text-white text-base group-hover:text-[#06C167] transition-colors duration-200">Uber Eats</span>
+        <svg class="w-4 h-4 text-[#9E9E9E] group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+
+      <a href="https://glovoapp.com/es/es/paracuellos-del-jarama/stores/jr-dugout-cafe-paracuellos-del-jarama"
+         target="_blank" rel="noopener noreferrer"
+         class="delivery-card flex items-center gap-3 bg-[#1B1C1C] rounded-full px-7 py-4 no-underline group">
+        <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:#FFC244;">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="12" cy="9" r="4" fill="#1A1A1A"/>
+            <path d="M12 13c-3.5 0-6 1.8-6 4v1h12v-1c0-2.2-2.5-4-6-4z" fill="#1A1A1A"/>
+          </svg>
+        </div>
+        <span class="font-display font-bold text-white text-base group-hover:text-[#FFC244] transition-colors duration-200">Glovo</span>
+        <svg class="w-4 h-4 text-[#9E9E9E] group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+
+      <a href="https://www.just-eat.es/restaurants-jr-dugout-paracuellos-de-jarama/menu"
+         target="_blank" rel="noopener noreferrer"
+         class="delivery-card flex items-center gap-3 bg-[#1B1C1C] rounded-full px-7 py-4 no-underline group">
+        <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:#FF8000;">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="5" y="7" width="14" height="2.5" rx="1.25" fill="white"/>
+            <rect x="5" y="11" width="10" height="2.5" rx="1.25" fill="white"/>
+            <rect x="5" y="15" width="12" height="2.5" rx="1.25" fill="white"/>
+          </svg>
+        </div>
+        <span class="font-display font-bold text-white text-base group-hover:text-[#FF8000] transition-colors duration-200">Just Eat</span>
+        <svg class="w-4 h-4 text-[#9E9E9E] group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+
+    </div>
+    <p class="font-body text-[#9E9E9E] text-sm">
+      ¿Prefieres llamar? <a href="tel:607920285" class="text-[#E5E2E1] hover:text-[#FFC107] transition-colors duration-200 cursor-pointer">607 92 02 85</a>
+    </p>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+<footer id="contacto" class="bg-[#1B1C1C] pt-16 pb-8">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <div class="grid md:grid-cols-3 gap-12 mb-12">
+
+      <!-- Brand -->
+      <div>
+        <img src="img/logojrdugout.png" alt="Jr Dugout" class="h-12 w-auto mb-5">
+        <p class="font-body text-[#9E9E9E] text-sm leading-relaxed mb-5">Arepas artesanales y burgers a la leña en Paracuellos de Jarama, Madrid.</p>
+        <div class="flex items-center gap-2" aria-label="Valoración 5 estrellas en Google">
+          <div class="flex gap-0.5">
+            <svg class="w-4 h-4 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-4 h-4 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-4 h-4 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-4 h-4 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-4 h-4 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          </div>
+          <span class="font-body text-[#9E9E9E] text-xs">5,0 · 86 reseñas</span>
+        </div>
+      </div>
+
+      <!-- Menu links -->
+      <div>
+        <h4 class="font-display text-base font-bold text-white mb-6">El Menú</h4>
+        <nav aria-label="Menú de pie de página">
+          <ul class="space-y-3">
+            <li><a href="#arepas"   class="font-body text-[#9E9E9E] text-sm hover:text-[#FFC107] transition-colors duration-200 cursor-pointer">Arepas</a></li>
+            <li><a href="#burgers"  class="font-body text-[#9E9E9E] text-sm hover:text-[#FFC107] transition-colors duration-200 cursor-pointer">Burgers a la Leña</a></li>
+            <li><a href="#patatas"  class="font-body text-[#9E9E9E] text-sm hover:text-[#FFC107] transition-colors duration-200 cursor-pointer">Patatas Fritas</a></li>
+            <li><a href="#bebidas"  class="font-body text-[#9E9E9E] text-sm hover:text-[#FFC107] transition-colors duration-200 cursor-pointer">Bebidas</a></li>
+            <li><a href="#raciones" class="font-body text-[#9E9E9E] text-sm hover:text-[#FFC107] transition-colors duration-200 cursor-pointer">Raciones y Otros</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <h4 class="font-display text-base font-bold text-white mb-6">Encuéntranos</h4>
+        <address class="not-italic space-y-4">
+          <div class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-[#E65100] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            <p class="font-body text-[#9E9E9E] text-sm leading-relaxed">Cl. Chorrillo Alta, 7<br>28860 Paracuellos de Jarama<br>Madrid</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <svg class="w-5 h-5 text-[#E65100] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+            <a href="tel:607920285" class="font-body text-[#E5E2E1] text-sm hover:text-[#FFC107] transition-colors duration-200 cursor-pointer">607 92 02 85</a>
+          </div>
+        </address>
+      </div>
+
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="pt-8 divider">
+      <p class="font-body text-[#9E9E9E] text-xs text-center mt-8">
+        © 2025 Jr Dugout. Todos los derechos reservados. Hecho con fuego y amor venezolano.
+      </p>
+    </div>
+
+  </div>
+</footer>
+
+
+<!-- =========================================================
+     JS
+========================================================= -->
+<script>
+  // ---- Delivery modal ----
+  const deliveryModal = document.getElementById('delivery-modal');
+
+  function openDeliveryModal() {
+    deliveryModal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDeliveryModal() {
+    deliveryModal.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+  deliveryModal.addEventListener('click', (e) => {
+    if (e.target === deliveryModal) closeDeliveryModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeDeliveryModal();
+  });
+
+  // ---- Mobile menu ----
+  const menuToggle  = document.getElementById('menu-toggle');
+  const mobileMenu  = document.getElementById('mobile-menu');
+  const iconOpen    = document.getElementById('icon-open');
+  const iconClose   = document.getElementById('icon-close');
+  let menuOpen = false;
+
+  menuToggle.addEventListener('click', () => {
+    menuOpen = !menuOpen;
+    mobileMenu.classList.toggle('hidden',  !menuOpen);
+    mobileMenu.classList.toggle('flex',     menuOpen);
+    iconOpen.classList.toggle('hidden',     menuOpen);
+    iconClose.classList.toggle('hidden',   !menuOpen);
+    menuToggle.setAttribute('aria-expanded', menuOpen);
+  });
+
+  function closeMobileMenu() {
+    menuOpen = false;
+    mobileMenu.classList.add('hidden');
+    mobileMenu.classList.remove('flex');
+    iconOpen.classList.remove('hidden');
+    iconClose.classList.add('hidden');
+    menuToggle.setAttribute('aria-expanded', 'false');
+  }
+
+  // ============================================================
+  //  SCROLL EXPERIENCE (skill: creative-design/scroll-experience)
+  //  Stack: GSAP ScrollTrigger — sin Lenis para evitar layout bugs
+  // ============================================================
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---- Scroll progress bar (siempre activo) ----
+  const progressBar = document.getElementById('scroll-progress');
+  window.addEventListener('scroll', () => {
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    if (total > 0) progressBar.style.width = (window.scrollY / total * 100) + '%';
+  }, { passive: true });
+
+  if (!prefersReducedMotion) {
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    // ---- 1. Hero parallax — solo el glow, no el contenido ----
+    gsap.to('#hero-glow', {
+      y: -120,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#hero',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 2,
+      }
+    });
+
+    // ---- 2. Títulos de sección — slide up ----
+    gsap.utils.toArray('h2.font-display, h3.font-display').forEach(el => {
+      gsap.fromTo(el,
+        { y: 45, opacity: 0 },
+        {
+          y: 0, opacity: 1,
+          duration: 0.85,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 90%',
+            toggleActions: 'play none none none',
+          }
+        }
+      );
+    });
+
+    // ---- 3. Elementos .reveal ----
+    gsap.utils.toArray('.reveal').forEach(el => {
+      el.classList.remove('reveal');
+      gsap.fromTo(el,
+        { y: 35, opacity: 0 },
+        {
+          y: 0, opacity: 1,
+          duration: 0.8,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 90%',
+            toggleActions: 'play none none none',
+          }
+        }
+      );
+    });
+
+    // ---- 4. Cards de menú — entrada escalonada por sección ----
+    ['#arepas', '#burgers', '#patatas', '#raciones'].forEach(sectionId => {
+      const cards = gsap.utils.toArray(sectionId + ' .menu-card');
+      if (!cards.length) return;
+      gsap.fromTo(cards,
+        { y: 55, opacity: 0 },
+        {
+          y: 0, opacity: 1,
+          duration: 0.65,
+          stagger: 0.1,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: cards[0],
+            start: 'top 90%',
+            toggleActions: 'play none none none',
+          }
+        }
+      );
+    });
+
+    // ---- 5. Patatas — escala con rebote ----
+    gsap.utils.toArray('#patatas .menu-card').forEach((card, i) => {
+      gsap.fromTo(card,
+        { scale: 0.88, opacity: 0 },
+        {
+          scale: 1, opacity: 1,
+          duration: 0.55,
+          delay: i * 0.09,
+          ease: 'back.out(1.4)',
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 93%',
+            toggleActions: 'play none none none',
+          }
+        }
+      );
+    });
+
+    // ---- 6. Contador de reseñas ----
+    ScrollTrigger.create({
+      trigger: '#stats-block',
+      start: 'top 82%',
+      once: true,
+      onEnter: () => {
+        const el = document.getElementById('stat-reviews');
+        const obj = { val: 0 };
+        gsap.to(obj, {
+          val: 86,
+          duration: 1.8,
+          ease: 'power2.out',
+          onUpdate: () => { el.textContent = Math.round(obj.val); }
+        });
+      }
+    });
+
+    // ---- 7. Bebidas — slide desde la izquierda ----
+    gsap.utils.toArray('#bebidas li').forEach((item, i) => {
+      gsap.fromTo(item,
+        { x: -28, opacity: 0 },
+        {
+          x: 0, opacity: 1,
+          duration: 0.45,
+          delay: i * 0.06,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: item,
+            start: 'top 94%',
+            toggleActions: 'play none none none',
+          }
+        }
+      );
+    });
+
+    // ---- 8. Botones delivery en el banner CTA ----
+    const ctaDeliveryBtns = gsap.utils.toArray('.delivery-card');
+    if (ctaDeliveryBtns.length) {
+      gsap.fromTo(ctaDeliveryBtns,
+        { y: 28, opacity: 0 },
+        {
+          y: 0, opacity: 1,
+          duration: 0.55,
+          stagger: 0.12,
+          ease: 'back.out(1.5)',
+          scrollTrigger: {
+            trigger: ctaDeliveryBtns[0],
+            start: 'top 92%',
+            toggleActions: 'play none none none',
+          }
+        }
+      );
+    }
+
+  } else {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+  }
+</script>
+
+</body>
+</html>
