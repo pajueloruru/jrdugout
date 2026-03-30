@@ -6,9 +6,34 @@
   <title>Jr Dugout — Arepas & Burgers a la Leña · Paracuellos de Jarama</title>
   <meta name="description" content="Arepas artesanales y hamburguesas cocinadas a fuego de leña. Sabor venezolano auténtico en Paracuellos de Jarama, Madrid. ☎ 607 92 02 85">
 
-  <!-- Google Fonts: Epilogue + Plus Jakarta Sans -->
+  <!-- SEO: Canonical & Robots -->
+  <link rel="canonical" href="https://jrdugout.es/">
+  <meta name="robots" content="index, follow">
+  <meta name="keywords" content="arepas Paracuellos de Jarama, hamburguesas a la leña Madrid, comida venezolana Madrid, Jr Dugout, arepas venezolanas, burgers leña, Paracuellos restaurante venezolano">
+  <meta name="author" content="Jr Dugout">
+  <meta name="geo.region" content="ES-MD">
+  <meta name="geo.placename" content="Paracuellos de Jarama, Madrid">
+
+  <!-- Open Graph (Facebook / WhatsApp / LinkedIn) -->
+  <meta property="og:type" content="restaurant">
+  <meta property="og:title" content="Jr Dugout — Arepas & Burgers a la Leña · Paracuellos de Jarama">
+  <meta property="og:description" content="Arepas artesanales y hamburguesas cocinadas a fuego de leña. Sabor venezolano auténtico en Paracuellos de Jarama, Madrid.">
+  <meta property="og:image" content="https://jrdugout.es/img/logojrdugout.png">
+  <meta property="og:image:alt" content="Jr Dugout — Arepas y Burgers venezolanos a la leña">
+  <meta property="og:url" content="https://jrdugout.es/">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:site_name" content="Jr Dugout">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Jr Dugout — Arepas & Burgers a la Leña · Paracuellos de Jarama">
+  <meta name="twitter:description" content="Arepas artesanales y hamburguesas cocinadas a fuego de leña. Sabor venezolano auténtico en Paracuellos de Jarama, Madrid.">
+  <meta name="twitter:image" content="https://jrdugout.es/img/logojrdugout.png">
+
+  <!-- Preconnect & Preload fonts críticos -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Google Fonts: Epilogue + Plus Jakarta Sans -->
   <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Tailwind CDN -->
@@ -170,6 +195,54 @@
       .gsap-hidden { opacity: 1 !important; }
     }
   </style>
+
+  <!-- Schema.org JSON-LD: LocalBusiness + Restaurant -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": ["Restaurant", "LocalBusiness"],
+    "name": "Jr Dugout",
+    "description": "Arepas artesanales y hamburguesas cocinadas a fuego de leña. Sabor venezolano auténtico en Paracuellos de Jarama, Madrid.",
+    "url": "https://jrdugout.es/",
+    "telephone": "+34607920285",
+    "image": "https://jrdugout.es/img/logojrdugout.png",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://jrdugout.es/img/logojrdugout.png"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Cl. Chorrillo Alta, 7",
+      "addressLocality": "Paracuellos de Jarama",
+      "addressRegion": "Madrid",
+      "postalCode": "28860",
+      "addressCountry": "ES"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 40.5074,
+      "longitude": -3.5245
+    },
+    "servesCuisine": ["Venezolana", "Hamburguesas", "Arepas"],
+    "priceRange": "€€",
+    "currenciesAccepted": "EUR",
+    "paymentAccepted": "Cash, Credit Card",
+    "hasMenu": "https://jrdugout.es/#arepas",
+    "sameAs": [
+      "https://glovoapp.com/es/es/paracuellos-del-jarama/stores/jr-dugout-cafe-paracuellos-del-jarama",
+      "https://www.just-eat.es/restaurants-jr-dugout-paracuellos-de-jarama/menu"
+    ],
+    "potentialAction": {
+      "@type": "OrderAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://glovoapp.com/es/es/paracuellos-del-jarama/stores/jr-dugout-cafe-paracuellos-del-jarama",
+        "actionPlatform": ["http://schema.org/DesktopWebPlatform", "http://schema.org/MobileWebPlatform"]
+      },
+      "deliveryMethod": ["http://purl.org/goodrelations/v1#DeliveryModeDirectDownload"]
+    }
+  }
+  </script>
 </head>
 <body class="bg-[#131313] text-[#E5E2E1]">
 
@@ -292,62 +365,187 @@
 <!-- =========================================================
      HERO
 ========================================================= -->
-<section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+<section id="hero" class="relative min-h-[100svh] flex items-center justify-center overflow-hidden pt-16">
 
   <!-- Background -->
   <div class="absolute inset-0">
-    <img src="img/burguerjr.png" alt="" class="w-full h-full object-cover" aria-hidden="true">
-    <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(19,19,19,0.55) 0%, rgba(19,19,19,0.7) 60%, #131313 100%);"></div>
-    <!-- Glow orb -->
-    <div id="hero-glow" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none" style="background: radial-gradient(circle, rgba(230,81,0,0.22) 0%, transparent 70%);"></div>
+    <img src="img/burguerjr.png" alt="" class="w-full h-full object-cover object-center" aria-hidden="true" fetchpriority="high">
+    <!-- Overlay más fuerte en móvil para máxima legibilidad -->
+    <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(19,19,19,0.60) 0%, rgba(19,19,19,0.82) 60%, #1B1C1C 100%);"></div>
+    <!-- Glow orb (solo visible en desktop) -->
+    <div id="hero-glow" class="hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none" style="background: radial-gradient(circle, rgba(230,81,0,0.22) 0%, transparent 70%);"></div>
   </div>
 
-  <!-- Dark gradient overlay -->
-  <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(19,19,19,0.2) 0%, rgba(19,19,19,0.55) 60%, #131313 100%);"></div>
-
   <!-- Content -->
-  <div class="relative z-10 text-center px-6 max-w-5xl mx-auto">
+  <div class="relative z-10 text-center px-5 max-w-5xl mx-auto w-full">
 
     <!-- Logo -->
-    <div class="flex justify-center mb-8">
-      <img src="img/logojrdugout.png" alt="Jr Dugout" class="h-24 md:h-36 w-auto drop-shadow-2xl">
+    <div class="flex justify-center mb-5 md:mb-8">
+      <img src="img/logojrdugout.png" alt="Jr Dugout" class="h-16 sm:h-20 md:h-28 lg:h-36 w-auto drop-shadow-2xl">
     </div>
 
-    <p class="text-[#FFC107] font-display font-bold text-xs uppercase tracking-[0.35em] mb-5">Paracuellos de Jarama · Madrid</p>
+    <!-- Localización -->
+    <p class="text-[#FFC107] font-display font-bold text-[0.65rem] sm:text-xs uppercase tracking-[0.3em] mb-4 md:mb-5">Paracuellos de Jarama · Madrid</p>
 
-    <h1 class="font-display font-black text-5xl md:text-7xl lg:text-8xl text-white leading-[1.05] mb-6">
+    <!-- Título H1 — fluido de 2.5rem (móvil) a 8xl (desktop) -->
+    <h1 class="font-display font-black text-[2.5rem] leading-[1.05] sm:text-5xl md:text-7xl lg:text-8xl text-white mb-4 md:mb-6">
       Sabor<br>
       <span class="flame-text">Venezolano</span><br>
       a la Brasa
     </h1>
 
-    <p class="font-body text-[#E5E2E1] text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed" style="opacity:0.88;">
-      Arepas artesanales y burgers cocinadas a fuego de leña real.<br class="hidden md:block"> El calor de Venezuela en cada bocado.
+    <!-- Subtítulo -->
+    <p class="font-body text-[#E5E2E1] text-[0.95rem] sm:text-lg md:text-xl max-w-sm sm:max-w-xl md:max-w-2xl mx-auto mb-7 md:mb-10 leading-relaxed" style="opacity:0.88;">
+      Arepas artesanales y burgers cocinadas a fuego de leña real.<br class="hidden sm:block"> El calor de Venezuela en cada bocado.
     </p>
 
-    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-      <button onclick="openDeliveryModal()" class="btn-primary px-10 py-4 text-base">Pedir Online Ahora</button>
-      <a href="#menu" class="btn-outline px-10 py-4 text-base">Ver el Menú</a>
+    <!-- CTAs — ancho completo en móvil, auto en sm+ -->
+    <div class="flex flex-col gap-3 sm:flex-row sm:gap-4 justify-center">
+      <button onclick="openDeliveryModal()" class="btn-primary min-h-[52px] w-full sm:w-auto px-8 py-4 text-base font-bold">Pedir Online Ahora</button>
+      <a href="#menu" class="btn-outline min-h-[52px] w-full sm:w-auto px-8 py-4 text-base font-bold flex items-center justify-center cursor-pointer">Ver el Menú</a>
     </div>
 
-    <!-- 5 stars -->
-    <div class="flex items-center justify-center gap-2 mt-14">
-      <div class="flex gap-0.5" aria-label="5 estrellas de valoración">
-        <svg class="w-5 h-5 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-        <svg class="w-5 h-5 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-        <svg class="w-5 h-5 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-        <svg class="w-5 h-5 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-        <svg class="w-5 h-5 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+    <!-- Estrellas + badges de entrega -->
+    <div class="mt-8 md:mt-14 flex flex-col items-center gap-3">
+
+      <!-- 5 estrellas -->
+      <div class="flex items-center gap-2">
+        <div class="flex gap-0.5" aria-label="5 estrellas de valoración">
+          <svg class="w-4 h-4 sm:w-5 sm:h-5 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 sm:w-5 sm:h-5 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 sm:w-5 sm:h-5 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 sm:w-5 sm:h-5 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 sm:w-5 sm:h-5 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        </div>
+        <span class="font-body text-xs sm:text-sm text-[#E5E2E1]" style="opacity:0.72;">5,0 · 86 reseñas en Google</span>
       </div>
-      <span class="font-body text-sm text-[#E5E2E1]" style="opacity:0.72;">5,0 · 86 reseñas en Google</span>
+
+      <!-- Badges Glovo / Just Eat -->
+      <div class="flex items-center gap-2 flex-wrap justify-center">
+        <span class="inline-flex items-center gap-1.5 bg-white/10 backdrop-blur-sm border border-white/10 rounded-full px-3 py-1 text-[0.7rem] font-semibold text-[#E5E2E1] tracking-wide">
+          Disponible en Glovo
+        </span>
+        <span class="inline-flex items-center gap-1.5 bg-white/10 backdrop-blur-sm border border-white/10 rounded-full px-3 py-1 text-[0.7rem] font-semibold text-[#E5E2E1] tracking-wide">
+          Disponible en Just Eat
+        </span>
+      </div>
+
     </div>
   </div>
 
   <!-- Scroll arrow -->
-  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce" aria-hidden="true">
+  <div class="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 animate-bounce" aria-hidden="true">
     <svg class="w-6 h-6 text-[#E5E2E1]" style="opacity:0.4;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
     </svg>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     RESEÑAS
+========================================================= -->
+<section id="resenas" class="bg-[#1B1C1C] py-16 md:py-20">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <!-- Cabecera -->
+    <div class="text-center mb-10 md:mb-14 reveal">
+      <p class="text-[#FFC107] font-display font-bold text-xs uppercase tracking-[0.35em] mb-3">Lo que dicen nuestros clientes</p>
+      <h2 class="font-display font-black text-3xl md:text-5xl text-white mb-4">86 reseñas.<br class="sm:hidden"> Todas con 5 estrellas.</h2>
+
+      <!-- Resumen de puntuación -->
+      <div class="inline-flex items-center gap-3 bg-[#2A2A2A] rounded-2xl px-6 py-3 mt-2">
+        <span class="font-display font-black text-4xl text-white">5,0</span>
+        <div>
+          <div class="flex gap-0.5 mb-1" aria-label="5 estrellas">
+            <svg class="w-5 h-5 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-5 h-5 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-5 h-5 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-5 h-5 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-5 h-5 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          </div>
+          <p class="font-body text-[#9E9E9E] text-xs">86 reseñas en Google</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grid de reseñas -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+
+      <!-- Reseña 1 -->
+      <div class="menu-card bg-[#2A2A2A] rounded-2xl p-5 md:p-6 flex flex-col gap-4 reveal">
+        <div class="flex gap-0.5" aria-label="5 estrellas">
+          <svg class="w-4 h-4 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        </div>
+        <p class="font-body text-[#E5E2E1] text-sm leading-relaxed flex-1">"La mejor arepa de carne mechada que he probado fuera de Venezuela. El sabor es exactamente el de casa. Volveré sin duda."</p>
+        <div class="flex items-center gap-3 pt-2 border-t border-white/5">
+          <div class="w-8 h-8 rounded-full bg-[#E65100] flex items-center justify-center flex-shrink-0">
+            <span class="font-display font-black text-white text-xs">MA</span>
+          </div>
+          <div>
+            <p class="font-body font-semibold text-white text-xs">María A.</p>
+            <p class="font-body text-[#9E9E9E] text-[0.65rem]">Reseña en Google</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reseña 2 -->
+      <div class="menu-card bg-[#2A2A2A] rounded-2xl p-5 md:p-6 flex flex-col gap-4 reveal">
+        <div class="flex gap-0.5" aria-label="5 estrellas">
+          <svg class="w-4 h-4 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        </div>
+        <p class="font-body text-[#E5E2E1] text-sm leading-relaxed flex-1">"Las hamburguesas a la leña son una pasada. Se nota que usan leña de verdad, el sabor ahumado es increíble. Los tequeños también son imprescindibles."</p>
+        <div class="flex items-center gap-3 pt-2 border-t border-white/5">
+          <div class="w-8 h-8 rounded-full bg-[#E65100] flex items-center justify-center flex-shrink-0">
+            <span class="font-display font-black text-white text-xs">CL</span>
+          </div>
+          <div>
+            <p class="font-body font-semibold text-white text-xs">Carlos L.</p>
+            <p class="font-body text-[#9E9E9E] text-[0.65rem]">Reseña en Google</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reseña 3 -->
+      <div class="menu-card bg-[#2A2A2A] rounded-2xl p-5 md:p-6 flex flex-col gap-4 reveal sm:col-span-2 lg:col-span-1">
+        <div class="flex gap-0.5" aria-label="5 estrellas">
+          <svg class="w-4 h-4 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-[#FFC107]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        </div>
+        <p class="font-body text-[#E5E2E1] text-sm leading-relaxed flex-1">"Sitio con mucho encanto. El trato es muy amable y la comida está riquísima. La burger de ternera es espectacular. Sin duda el mejor sitio de Paracuellos."</p>
+        <div class="flex items-center gap-3 pt-2 border-t border-white/5">
+          <div class="w-8 h-8 rounded-full bg-[#E65100] flex items-center justify-center flex-shrink-0">
+            <span class="font-display font-black text-white text-xs">SR</span>
+          </div>
+          <div>
+            <p class="font-body font-semibold text-white text-xs">Sara R.</p>
+            <p class="font-body text-[#9E9E9E] text-[0.65rem]">Reseña en Google</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CTA Google Reviews -->
+    <div class="text-center mt-10 reveal">
+      <a href="https://www.google.com/maps/search/Jr+Dugout+Paracuellos" target="_blank" rel="noopener noreferrer"
+         class="inline-flex items-center gap-2 text-[#9E9E9E] hover:text-[#FFC107] transition-colors duration-200 text-sm font-semibold cursor-pointer">
+        Ver todas las reseñas en Google
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+      </a>
+    </div>
+
   </div>
 </section>
 
@@ -395,7 +593,7 @@
       <!-- Image -->
       <div class="reveal">
         <div class="rounded-3xl overflow-hidden aspect-square">
-          <img src="img/arepajrdugout2.png" alt="Arepa Jr Dugout" class="w-full h-full object-cover">
+          <img src="img/arepajrdugout2.png" alt="Arepa Jr Dugout venezolana a la leña" class="w-full h-full object-cover" loading="lazy" width="400" height="208">
         </div>
       </div>
 
@@ -435,7 +633,7 @@
       <!-- Arepa Jr Dugout (Popular) -->
       <div class="menu-card bg-[#2A2A2A] rounded-3xl overflow-hidden">
         <div class="h-52 relative overflow-hidden">
-          <img src="img/arepajrdugout2.png" alt="Arepa Jr Dugout Café" class="w-full h-full object-cover">
+          <img src="img/arepajrdugout2.png" alt="Arepa Jr Dugout Café venezolana" class="w-full h-full object-cover" loading="lazy" width="400" height="208">
           <div class="absolute top-3 left-3"><span class="chip-popular">Popular</span></div>
         </div>
         <div class="p-6">
@@ -451,7 +649,7 @@
       <!-- Arepa Carne Mechada -->
       <div class="menu-card bg-[#2A2A2A] rounded-3xl overflow-hidden">
         <div class="h-52 relative overflow-hidden">
-          <img src="img/arepajrdugout2.png" alt="Arepa de Carne Mechada" class="w-full h-full object-cover">
+          <img src="img/arepacarnemechada.jpg" alt="Arepa de Carne Mechada venezolana Jr Dugout" class="w-full h-full object-cover" loading="lazy" width="400" height="208">
         </div>
         <div class="p-6">
           <h4 class="font-display text-xl font-bold text-white mb-1">Arepa de Carne Mechada</h4>
@@ -466,7 +664,7 @@
       <!-- Arepa Pollo -->
       <div class="menu-card bg-[#2A2A2A] rounded-3xl overflow-hidden">
         <div class="h-52 relative overflow-hidden">
-          <img src="img/arepapollo.png" alt="Arepa de Pollo" class="w-full h-full object-cover">
+          <img src="img/arepapollo.png" alt="Arepa de Pollo venezolana Jr Dugout Paracuellos" class="w-full h-full object-cover" loading="lazy" width="400" height="208">
         </div>
         <div class="p-6">
           <h4 class="font-display text-xl font-bold text-white mb-1">Arepa de Pollo</h4>
@@ -481,7 +679,7 @@
       <!-- Arepa Peluda -->
       <div class="menu-card bg-[#2A2A2A] rounded-3xl overflow-hidden">
         <div class="h-52 relative overflow-hidden">
-          <img src="img/arepajrdugout2.png" alt="Arepa Peluda" class="w-full h-full object-cover">
+          <img src="img/arepajrdugout2.png" alt="Arepa Peluda carne mechada y queso Jr Dugout" class="w-full h-full object-cover" loading="lazy" width="400" height="208">
         </div>
         <div class="p-6">
           <h4 class="font-display text-xl font-bold text-white mb-1">Arepa Peluda</h4>
@@ -496,7 +694,7 @@
       <!-- Arepa Jamón y Queso -->
       <div class="menu-card bg-[#2A2A2A] rounded-3xl overflow-hidden">
         <div class="h-52 relative overflow-hidden">
-          <img src="img/arepajrdugout2.png" alt="Arepa Jamón y Queso" class="w-full h-full object-cover">
+          <img src="img/arepajamonyqueso.jpg" alt="Arepa de Jamón y Queso venezolana Jr Dugout" class="w-full h-full object-cover" loading="lazy" width="400" height="208">
         </div>
         <div class="p-6">
           <h4 class="font-display text-xl font-bold text-white mb-1">Arepa Jamón y Queso</h4>
@@ -531,7 +729,7 @@
     <div class="menu-card bg-[#1B1C1C] rounded-3xl overflow-hidden mb-6">
       <div class="grid md:grid-cols-2">
         <div class="relative overflow-hidden" style="min-height:280px;">
-          <img src="img/burguerjr.png" alt="Burguer Ternera" class="w-full h-full object-cover absolute inset-0">
+          <img src="img/jrternera.png" alt="Hamburguesa de Ternera a la leña Jr Dugout Paracuellos" class="w-full h-full object-cover absolute inset-0" loading="lazy" width="600" height="280">
           <div class="absolute top-4 left-4"><span class="chip-popular">Popular</span></div>
         </div>
         <div class="p-8 md:p-12 flex flex-col justify-center">
@@ -551,7 +749,7 @@
 
       <div class="menu-card bg-[#1B1C1C] rounded-3xl overflow-hidden">
         <div class="h-44 relative overflow-hidden">
-          <img src="img/burguerjr.png" alt="Burguer Pollo" class="w-full h-full object-cover">
+          <img src="img/jrpollo.jpg" alt="Hamburguesa de Pollo a la leña Jr Dugout" class="w-full h-full object-cover" loading="lazy" width="400" height="176">
         </div>
         <div class="p-6">
           <h4 class="font-display text-xl font-bold text-white mb-1">Burguer Pollo</h4>
@@ -565,7 +763,7 @@
 
       <div class="menu-card bg-[#1B1C1C] rounded-3xl overflow-hidden">
         <div class="h-44 overflow-hidden">
-          <img src="img/burguerjr.png" alt="Burguer Sajonia" class="w-full h-full object-cover">
+          <img src="img/jrpollo.jpg" alt="Hamburguesa Sajonia Jr Dugout Paracuellos de Jarama" class="w-full h-full object-cover" loading="lazy" width="400" height="176">
         </div>
         <div class="p-6">
           <h4 class="font-display text-xl font-bold text-white mb-1">Burguer Sajonia</h4>
@@ -579,7 +777,7 @@
 
       <div class="menu-card bg-[#1B1C1C] rounded-3xl overflow-hidden">
         <div class="h-44 overflow-hidden">
-          <img src="img/burguerjr.png" alt="Burguer Carne Mechada" class="w-full h-full object-cover">
+          <img src="img/jrmechada.jpg" alt="Hamburguesa de Carne Mechada venezolana Jr Dugout" class="w-full h-full object-cover" loading="lazy" width="400" height="176">
         </div>
         <div class="p-6">
           <h4 class="font-display text-xl font-bold text-white mb-1">Burguer Carne Mechada</h4>
@@ -751,7 +949,7 @@
         <div class="menu-card bg-[#1B1C1C] rounded-3xl p-6 mb-4">
           <div class="flex gap-5 items-start">
             <div class="w-20 h-20 rounded-2xl flex-shrink-0 overflow-hidden">
-              <img src="img/tequeñosjr.png" alt="Tequeños" class="w-full h-full object-cover">
+              <img src="img/tequeñosjr.png" alt="Tequeños venezolanos Jr Dugout Paracuellos" class="w-full h-full object-cover" loading="lazy" width="400" height="176">
             </div>
             <div class="flex-1 min-w-0">
               <h4 class="font-display text-xl font-bold text-white mb-1">Tequeños <span class="font-body text-sm text-[#9E9E9E] font-normal">(6 uds.)</span></h4>
@@ -767,9 +965,8 @@
         <!-- Desayuno -->
         <div class="menu-card bg-[#1B1C1C] rounded-3xl p-6">
           <div class="flex gap-5 items-start">
-            <div class="img-placeholder w-20 h-20 rounded-2xl flex-shrink-0 flex items-center justify-center opacity-60">
-              <!-- REPLACE: <img src="img/desayuno.jpg" alt="Desayuno con Tostada" class="w-full h-full object-cover rounded-2xl"> -->
-              <svg class="w-8 h-8 opacity-50" fill="currentColor" style="color:#E65100" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/></svg>
+            <div class="w-20 h-20 rounded-2xl flex-shrink-0 overflow-hidden">
+              <img src="img/tostada.jpg" alt="Desayuno con Tostada Jr Dugout Paracuellos de Jarama" class="w-full h-full object-cover rounded-2xl" loading="lazy" width="80" height="80">
             </div>
             <div class="flex-1 min-w-0">
               <h4 class="font-display text-xl font-bold text-white mb-1">Desayuno con Tostada</h4>
@@ -860,7 +1057,7 @@
 
       <!-- Brand -->
       <div>
-        <img src="img/logojrdugout.png" alt="Jr Dugout" class="h-12 w-auto mb-5">
+        <img src="img/logojrdugout.png" alt="Jr Dugout — Arepas y Burgers venezolanos" class="h-12 w-auto mb-5" loading="lazy" width="120" height="48">
         <p class="font-body text-[#9E9E9E] text-sm leading-relaxed mb-5">Arepas artesanales y burgers a la leña en Paracuellos de Jarama, Madrid.</p>
         <div class="flex items-center gap-2" aria-label="Valoración 5 estrellas en Google">
           <div class="flex gap-0.5">
